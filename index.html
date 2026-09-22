@@ -3,17 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Un Ramo Especial para Ti 💛</title>
+  <title>Flores Amarillas para Ti 💛</title>
   <style>
     :root {
-      --bg-color: #0f172a;
-      --yellow-main: #facc15;
-      --yellow-light: #fef08a;
-      --yellow-dark: #eab308;
-      --center-orange: #d97706;
-      --stem-green: #15803d;
-      --leaf-green: #22c55e;
-      --ribbon-pink: #f43f5e;
+      --bg: #0b0f19;
+      --accent: #facc15;
     }
 
     * {
@@ -23,205 +17,125 @@
     }
 
     body {
-      background-color: var(--bg-color);
+      background-color: var(--bg);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden;
+      justify-content: space-between;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       color: #fff;
-      padding-top: 20px;
+      padding: 20px 10px;
+      overflow-x: hidden;
     }
 
     h1 {
-      margin-bottom: 1rem;
-      font-size: 2rem;
-      text-shadow: 0 0 12px rgba(250, 204, 21, 0.5);
+      font-size: 1.6rem;
       text-align: center;
-      padding: 0 15px;
+      color: #fef08a;
+      text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+      margin-bottom: 15px;
     }
 
     /* Selector de Estilos */
-    .style-selector {
+    .controls {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 25px;
-      padding: 0 10px;
-      z-index: 20;
+      gap: 8px;
+      max-width: 400px;
+      margin-bottom: 15px;
+      z-index: 10;
     }
 
-    .btn-style {
+    .btn {
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(250, 204, 21, 0.4);
+      border: 1px solid rgba(250, 204, 21, 0.3);
       color: #fef08a;
-      padding: 8px 16px;
+      padding: 6px 14px;
       border-radius: 20px;
+      font-size: 0.85rem;
       cursor: pointer;
-      font-size: 0.9rem;
       transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
     }
 
-    .btn-style:hover, .btn-style.active {
-      background: var(--yellow-main);
-      color: #0f172a;
+    .btn:hover, .btn.active {
+      background: #facc15;
+      color: #0b0f19;
       font-weight: bold;
-      box-shadow: 0 0 12px var(--yellow-main);
+      box-shadow: 0 0 12px #facc15;
     }
 
-    .bouquet-container {
-      position: relative;
-      width: 320px;
-      height: 420px;
+    /* Contenedor del Ramo SVG */
+    .svg-container {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
       display: flex;
       justify-content: center;
-      align-items: flex-end;
+      align-items: center;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      max-height: 55vh;
       transition: all 0.5s ease;
     }
 
-    /* ESTILO 1: CLÁSICO ILUSTRADO */
-    .style-classic .stem {
-      position: absolute;
-      bottom: 20px;
-      width: 8px;
-      background: linear-gradient(to right, #166534, var(--stem-green));
-      border-radius: 4px;
-      transform-origin: bottom center;
-    }
+    /* ESTILOS VISUALES */
+    /* 1. Clásico */
+    .style-classic .petal { fill: #facc15; stroke: #eab308; stroke-width: 1.5; }
+    .style-classic .center { fill: #d97706; }
+    .style-classic .stem { stroke: #15803d; stroke-width: 4; }
+    .style-classic .leaf { fill: #22c55e; }
+    .style-classic .ribbon { fill: #f43f5e; }
 
-    .style-classic .stem-1 { height: 260px; transform: rotate(-12deg); }
-    .style-classic .stem-2 { height: 280px; transform: rotate(-4deg); }
-    .style-classic .stem-3 { height: 290px; transform: rotate(0deg); }
-    .style-classic .stem-4 { height: 280px; transform: rotate(5deg); }
-    .style-classic .stem-5 { height: 260px; transform: rotate(14deg); }
+    /* 2. Líneas */
+    .style-lines .petal, .style-lines .center, .style-lines .leaf, .style-lines .ribbon {
+      fill: none !important;
+      stroke: #fef08a !important;
+      stroke-width: 2 !important;
+      filter: drop-shadow(0 0 3px #facc15);
+    }
+    .style-lines .stem { stroke: #fef08a !important; stroke-width: 2 !important; }
 
-    .style-classic .leaf {
-      position: absolute;
-      width: 40px;
-      height: 20px;
-      background-color: var(--leaf-green);
-      border-radius: 20px 0px 20px 0px;
-      box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
-    }
-    .style-classic .leaf-left { left: 70px; bottom: 120px; transform: rotate(-25deg); }
-    .style-classic .leaf-right { right: 70px; bottom: 140px; transform: scaleX(-1) rotate(-25deg); }
+    /* 3. Puntos / Puntillismo */
+    .style-dots .petal { fill: url(#dot-pattern) !important; stroke: none; }
+    .style-dots .center { fill: #fef08a; }
+    .style-dots .leaf { fill: url(#leaf-dots) !important; }
+    .style-dots .stem { stroke: #22c55e; stroke-dasharray: 2 4; stroke-width: 5; }
 
-    .style-classic .ribbon {
-      position: absolute;
-      bottom: 60px;
-      width: 40px;
-      height: 25px;
-      background-color: var(--ribbon-pink);
-      border-radius: 4px;
-      z-index: 5;
-    }
+    /* 4. Mandala */
+    .style-mandala .petal { fill: #fef08a; stroke: #b45309; stroke-width: 1; }
+    .style-mandala .center { fill: #f59e0b; stroke: #fff; stroke-width: 1.5; stroke-dasharray: 2 2; }
+    .style-mandala .leaf { fill: #047857; stroke: #fef08a; stroke-width: 1; }
 
-    .style-classic .flower {
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      z-index: 4;
-      animation: gentle-sway 4s infinite ease-in-out;
-    }
-    .style-classic .flower-1 { top: 20px; left: 10px; }
-    .style-classic .flower-2 { top: 0px; left: 60px; }
-    .style-classic .flower-3 { top: -20px; left: 110px; }
-    .style-classic .flower-4 { top: 10px; left: 160px; }
-    .style-classic .flower-5 { top: 40px; left: 210px; }
+    /* 5. Patrones */
+    .style-patterns .petal { fill: url(#stripe-pattern) !important; stroke: #eab308; }
+    .style-patterns .leaf { fill: url(#leaf-pattern) !important; }
 
-    .style-classic .center {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 28px; height: 28px;
-      background: radial-gradient(circle, var(--yellow-light), var(--center-orange));
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-    }
+    /* 6. Neón */
+    .style-neon .petal { fill: none; stroke: #facc15; stroke-width: 3; filter: drop-shadow(0 0 8px #facc15); }
+    .style-neon .center { fill: #fff; filter: drop-shadow(0 0 10px #facc15); }
+    .style-neon .stem { stroke: #4ade80; stroke-width: 3; filter: drop-shadow(0 0 6px #4ade80); }
+    .style-neon .leaf { fill: none; stroke: #4ade80; stroke-width: 2; }
+    .style-neon .ribbon { fill: none; stroke: #ff4d6d; stroke-width: 3; filter: drop-shadow(0 0 6px #ff4d6d); }
 
-    .style-classic .petal {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 22px; height: 48px;
-      background: linear-gradient(to top, var(--yellow-dark), var(--yellow-main), var(--yellow-light));
-      border-radius: 50% 50% 10% 10%;
-      transform-origin: bottom center;
-      margin-left: -11px; margin-top: -48px;
-    }
-
-    /* ESTILO 2: LÍNEAS / LINE ART */
-    .style-lines .stem, .style-lines .leaf, .style-lines .ribbon, .style-lines .petal, .style-lines .center {
-      background: transparent !important;
-      border: 2px solid var(--yellow-main) !important;
-      box-shadow: 0 0 6px rgba(250, 204, 21, 0.6) !important;
-    }
-    .style-lines .flower { animation: float-lines 3s infinite ease-in-out alternate; }
-
-    /* ESTILO 3: PUNTILLISMO */
-    .style-dots .petal {
-      background: radial-gradient(circle, var(--yellow-main) 20%, transparent 20%),
-                  radial-gradient(circle, var(--yellow-dark) 20%, transparent 20%) !important;
-      background-size: 6px 6px !important;
-      border: none !important;
-    }
-    .style-dots .center {
-      background: radial-gradient(circle, #fef08a 30%, transparent 30%) !important;
-      background-size: 5px 5px !important;
-    }
-
-    /* ESTILO 4: MANDALA */
-    .style-mandala .flower {
-      transform: scale(1.1);
-    }
-    .style-mandala .petal {
-      border-radius: 100% 0 100% 0 !important;
-      background: linear-gradient(135deg, var(--yellow-light), var(--center-orange)) !important;
-      border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    }
-    .style-mandala .center {
-      border: 2px dashed var(--yellow-light) !important;
-    }
-
-    /* ESTILO 5: PATRONES */
-    .style-patterns .petal {
-      background: repeating-linear-gradient(45deg, var(--yellow-main), var(--yellow-main) 4px, var(--yellow-dark) 4px, var(--yellow-dark) 8px) !important;
-    }
-    .style-patterns .leaf {
-      background: repeating-linear-gradient(-45deg, #15803d, #15803d 5px, #22c55e 5px, #22c55e 10px) !important;
-    }
-
-    /* Rotación de pétalos */
-    .petal:nth-child(1)  { transform: rotate(0deg); }
-    .petal:nth-child(2)  { transform: rotate(45deg); }
-    .petal:nth-child(3)  { transform: rotate(90deg); }
-    .petal:nth-child(4)  { transform: rotate(135deg); }
-    .petal:nth-child(5)  { transform: rotate(180deg); }
-    .petal:nth-child(6)  { transform: rotate(225deg); }
-    .petal:nth-child(7)  { transform: rotate(270deg); }
-    .petal:nth-child(8)  { transform: rotate(315deg); }
-
-    /* Partículas */
+    /* Partículas al tocar */
     .sparkle {
       position: absolute;
       pointer-events: none;
-      background: var(--yellow-light);
+      background: #fef08a;
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--yellow-main);
-      animation: fade-out 1.5s forwards ease-out;
-    }
-
-    @keyframes gentle-sway {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-6px) rotate(2deg); }
+      box-shadow: 0 0 8px #facc15;
+      animation: fade-out 1.2s forwards ease-out;
     }
 
     @keyframes fade-out {
       0% { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(0.2) translateY(-20px); }
+      100% { opacity: 0; transform: scale(0.1) translateY(-15px); }
     }
   </style>
 </head>
@@ -229,68 +143,133 @@
 
   <h1>Flores amarillas para ti 💛</h1>
 
-  <div class="style-selector">
-    <button class="btn-style active" onclick="setStyle('classic')">Clásico</button>
-    <button class="btn-style" onclick="setStyle('lines')">Líneas</button>
-    <button class="btn-style" onclick="setStyle('dots')">Puntos</button>
-    <button class="btn-style" onclick="setStyle('mandala')">Mandala</button>
-    <button class="btn-style" onclick="setStyle('patterns')">Patrones</button>
+  <div class="controls">
+    <button class="btn active" onclick="setStyle('classic', event)">Clásico</button>
+    <button class="btn" onclick="setStyle('lines', event)">Líneas</button>
+    <button class="btn" onclick="setStyle('dots', event)">Puntos</button>
+    <button class="btn" onclick="setStyle('mandala', event)">Mandala</button>
+    <button class="btn" onclick="setStyle('patterns', event)">Patrones</button>
+    <button class="btn" onclick="setStyle('neon', event)">Neón</button>
   </div>
 
-  <div id="bouquet" class="bouquet-container style-classic">
-    <!-- Tallos -->
-    <div class="stem stem-1"></div>
-    <div class="stem stem-2"></div>
-    <div class="stem stem-3"></div>
-    <div class="stem stem-4"></div>
-    <div class="stem stem-5"></div>
+  <div class="svg-container">
+    <svg id="flower-svg" class="style-classic" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Patrón de Puntos -->
+        <pattern id="dot-pattern" width="6" height="6" patternUnits="userSpaceOnUse">
+          <circle cx="3" cy="3" r="1.5" fill="#facc15" />
+        </pattern>
+        <pattern id="leaf-dots" width="6" height="6" patternUnits="userSpaceOnUse">
+          <circle cx="3" cy="3" r="1.5" fill="#22c55e" />
+        </pattern>
+        <!-- Patrón de Rayas -->
+        <pattern id="stripe-pattern" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#facc15" stroke-width="4" />
+          <line x1="4" y1="0" x2="4" y2="8" stroke="#ca8a04" stroke-width="4" />
+        </pattern>
+        <pattern id="leaf-pattern" width="8" height="8" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#15803d" stroke-width="4" />
+          <line x1="4" y1="0" x2="4" y2="8" stroke="#4ade80" stroke-width="4" />
+        </pattern>
+      </defs>
 
-    <!-- Hojas -->
-    <div class="leaf leaf-left"></div>
-    <div class="leaf leaf-right"></div>
+      <!-- Tallos -->
+      <path class="stem" d="M 110,250 Q 130,320 135,370" fill="none"/>
+      <path class="stem" d="M 130,240 Q 140,310 145,370" fill="none"/>
+      <path class="stem" d="M 150,230 Q 150,300 150,370" fill="none"/>
+      <path class="stem" d="M 170,240 Q 160,310 155,370" fill="none"/>
+      <path class="stem" d="M 190,250 Q 170,320 165,370" fill="none"/>
 
-    <!-- Cinta -->
-    <div class="ribbon"></div>
+      <!-- Hojas -->
+      <path class="leaf" d="M 100,280 Q 70,260 80,290 Q 110,300 115,285 Z" />
+      <path class="leaf" d="M 200,280 Q 230,260 220,290 Q 190,300 185,285 Z" />
 
-    <!-- Flores -->
-    <div class="flower flower-1">
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="center"></div>
-    </div>
-    <div class="flower flower-2">
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="center"></div>
-    </div>
-    <div class="flower flower-3">
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="center"></div>
-    </div>
-    <div class="flower flower-4">
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="center"></div>
-    </div>
-    <div class="flower flower-5">
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
-      <div class="center"></div>
-    </div>
+      <!-- Cinta -->
+      <path class="ribbon" d="M 130,330 Q 150,325 170,330 Q 165,345 150,345 Q 135,345 130,330 Z" />
+      <path class="ribbon" d="M 140,342 L 130,375 L 145,370 Z" />
+      <path class="ribbon" d="M 160,342 L 170,375 L 155,370 Z" />
+
+      <!-- Flor 1 (Izquierda Abajo) -->
+      <g transform="translate(90, 190)">
+        <circle class="petal" cx="0" cy="-22" r="12"/>
+        <circle class="petal" cx="15" cy="-15" r="12"/>
+        <circle class="petal" cx="22" cy="0" r="12"/>
+        <circle class="petal" cx="15" cy="15" r="12"/>
+        <circle class="petal" cx="0" cy="22" r="12"/>
+        <circle class="petal" cx="-15" cy="15" r="12"/>
+        <circle class="petal" cx="-22" cy="0" r="12"/>
+        <circle class="petal" cx="-15" cy="-15" r="12"/>
+        <circle class="center" cx="0" cy="0" r="12"/>
+      </g>
+
+      <!-- Flor 2 (Izquierda Arriba) -->
+      <g transform="translate(110, 110)">
+        <circle class="petal" cx="0" cy="-25" r="14"/>
+        <circle class="petal" cx="18" cy="-18" r="14"/>
+        <circle class="petal" cx="25" cy="0" r="14"/>
+        <circle class="petal" cx="18" cy="18" r="14"/>
+        <circle class="petal" cx="0" cy="25" r="14"/>
+        <circle class="petal" cx="-18" cy="18" r="14"/>
+        <circle class="petal" cx="-25" cy="0" r="14"/>
+        <circle class="petal" cx="-18" cy="-18" r="14"/>
+        <circle class="center" cx="0" cy="0" r="14"/>
+      </g>
+
+      <!-- Flor 3 (Centro Principal) -->
+      <g transform="translate(150, 150)">
+        <circle class="petal" cx="0" cy="-30" r="16"/>
+        <circle class="petal" cx="21" cy="-21" r="16"/>
+        <circle class="petal" cx="30" cy="0" r="16"/>
+        <circle class="petal" cx="21" cy="21" r="16"/>
+        <circle class="petal" cx="0" cy="30" r="16"/>
+        <circle class="petal" cx="-21" cy="21" r="16"/>
+        <circle class="petal" cx="-30" cy="0" r="16"/>
+        <circle class="petal" cx="-21" cy="-21" r="16"/>
+        <circle class="center" cx="0" cy="0" r="16"/>
+      </g>
+
+      <!-- Flor 4 (Derecha Arriba) -->
+      <g transform="translate(190, 110)">
+        <circle class="petal" cx="0" cy="-25" r="14"/>
+        <circle class="petal" cx="18" cy="-18" r="14"/>
+        <circle class="petal" cx="25" cy="0" r="14"/>
+        <circle class="petal" cx="18" cy="18" r="14"/>
+        <circle class="petal" cx="0" cy="25" r="14"/>
+        <circle class="petal" cx="-18" cy="18" r="14"/>
+        <circle class="petal" cx="-25" cy="0" r="14"/>
+        <circle class="petal" cx="-18" cy="-18" r="14"/>
+        <circle class="center" cx="0" cy="0" r="14"/>
+      </g>
+
+      <!-- Flor 5 (Derecha Abajo) -->
+      <g transform="translate(210, 190)">
+        <circle class="petal" cx="0" cy="-22" r="12"/>
+        <circle class="petal" cx="15" cy="-15" r="12"/>
+        <circle class="petal" cx="22" cy="0" r="12"/>
+        <circle class="petal" cx="15" cy="15" r="12"/>
+        <circle class="petal" cx="0" cy="22" r="12"/>
+        <circle class="petal" cx="-15" cy="15" r="12"/>
+        <circle class="petal" cx="-22" cy="0" r="12"/>
+        <circle class="petal" cx="-15" cy="-15" r="12"/>
+        <circle class="center" cx="0" cy="0" r="12"/>
+      </g>
+    </svg>
   </div>
 
   <script>
-    function setStyle(styleName) {
-      const bouquet = document.getElementById('bouquet');
-      const buttons = document.querySelectorAll('.btn-style');
+    function setStyle(styleName, ev) {
+      const svg = document.getElementById('flower-svg');
+      const buttons = document.querySelectorAll('.btn');
       
-      bouquet.className = 'bouquet-container style-' + styleName;
+      svg.className.baseVal = 'style-' + styleName;
       
-      buttons.forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      buttons.forEach(b => b.classList.remove('active'));
+      if (ev && ev.target) {
+        ev.target.classList.add('active');
+      }
     }
 
+    /* Brillos al tocar o mover pantalla */
     document.addEventListener('mousemove', createSparkle);
     document.addEventListener('touchmove', (e) => {
       createSparkle(e.touches[0]);
@@ -300,7 +279,7 @@
       const sparkle = document.createElement('div');
       sparkle.classList.add('sparkle');
       
-      const size = Math.random() * 8 + 4;
+      const size = Math.random() * 6 + 4;
       sparkle.style.width = `${size}px`;
       sparkle.style.height = `${size}px`;
       
@@ -311,9 +290,8 @@
 
       setTimeout(() => {
         sparkle.remove();
-      }, 1500);
+      }, 1200);
     }
   </script>
 </body>
-  </html>
-  
+</html>
