@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Un Ramo Especial para Ti 💛</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --yellow-main: #facc15;
+      --yellow-light: #fef08a;
+      --yellow-dark: #eab308;
+      --center-orange: #d97706;
+      --stem-green: #15803d;
+      --leaf-green: #22c55e;
+      --ribbon-pink: #f43f5e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
+      color: #fff;
+      padding-top: 20px;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      text-shadow: 0 0 12px rgba(250, 204, 21, 0.5);
+      text-align: center;
+      padding: 0 15px;
+    }
+
+    /* Selector de Estilos */
+    .style-selector {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+      padding: 0 10px;
+      z-index: 20;
+    }
+
+    .btn-style {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(250, 204, 21, 0.4);
+      color: #fef08a;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .btn-style:hover, .btn-style.active {
+      background: var(--yellow-main);
+      color: #0f172a;
+      font-weight: bold;
+      box-shadow: 0 0 12px var(--yellow-main);
+    }
+
+    .bouquet-container {
+      position: relative;
+      width: 320px;
+      height: 420px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      transition: all 0.5s ease;
+    }
+
+    /* ESTILO 1: CLÁSICO ILUSTRADO */
+    .style-classic .stem {
+      position: absolute;
+      bottom: 20px;
+      width: 8px;
+      background: linear-gradient(to right, #166534, var(--stem-green));
+      border-radius: 4px;
+      transform-origin: bottom center;
+    }
+
+    .style-classic .stem-1 { height: 260px; transform: rotate(-12deg); }
+    .style-classic .stem-2 { height: 280px; transform: rotate(-4deg); }
+    .style-classic .stem-3 { height: 290px; transform: rotate(0deg); }
+    .style-classic .stem-4 { height: 280px; transform: rotate(5deg); }
+    .style-classic .stem-5 { height: 260px; transform: rotate(14deg); }
+
+    .style-classic .leaf {
+      position: absolute;
+      width: 40px;
+      height: 20px;
+      background-color: var(--leaf-green);
+      border-radius: 20px 0px 20px 0px;
+      box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .style-classic .leaf-left { left: 70px; bottom: 120px; transform: rotate(-25deg); }
+    .style-classic .leaf-right { right: 70px; bottom: 140px; transform: scaleX(-1) rotate(-25deg); }
+
+    .style-classic .ribbon {
+      position: absolute;
+      bottom: 60px;
+      width: 40px;
+      height: 25px;
+      background-color: var(--ribbon-pink);
+      border-radius: 4px;
+      z-index: 5;
+    }
+
+    .style-classic .flower {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      z-index: 4;
+      animation: gentle-sway 4s infinite ease-in-out;
+    }
+    .style-classic .flower-1 { top: 20px; left: 10px; }
+    .style-classic .flower-2 { top: 0px; left: 60px; }
+    .style-classic .flower-3 { top: -20px; left: 110px; }
+    .style-classic .flower-4 { top: 10px; left: 160px; }
+    .style-classic .flower-5 { top: 40px; left: 210px; }
+
+    .style-classic .center {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 28px; height: 28px;
+      background: radial-gradient(circle, var(--yellow-light), var(--center-orange));
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    .style-classic .petal {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 22px; height: 48px;
+      background: linear-gradient(to top, var(--yellow-dark), var(--yellow-main), var(--yellow-light));
+      border-radius: 50% 50% 10% 10%;
+      transform-origin: bottom center;
+      margin-left: -11px; margin-top: -48px;
+    }
+
+    /* ESTILO 2: LÍNEAS / LINE ART */
+    .style-lines .stem, .style-lines .leaf, .style-lines .ribbon, .style-lines .petal, .style-lines .center {
+      background: transparent !important;
+      border: 2px solid var(--yellow-main) !important;
+      box-shadow: 0 0 6px rgba(250, 204, 21, 0.6) !important;
+    }
+    .style-lines .flower { animation: float-lines 3s infinite ease-in-out alternate; }
+
+    /* ESTILO 3: PUNTILLISMO */
+    .style-dots .petal {
+      background: radial-gradient(circle, var(--yellow-main) 20%, transparent 20%),
+                  radial-gradient(circle, var(--yellow-dark) 20%, transparent 20%) !important;
+      background-size: 6px 6px !important;
+      border: none !important;
+    }
+    .style-dots .center {
+      background: radial-gradient(circle, #fef08a 30%, transparent 30%) !important;
+      background-size: 5px 5px !important;
+    }
+
+    /* ESTILO 4: MANDALA */
+    .style-mandala .flower {
+      transform: scale(1.1);
+    }
+    .style-mandala .petal {
+      border-radius: 100% 0 100% 0 !important;
+      background: linear-gradient(135deg, var(--yellow-light), var(--center-orange)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    }
+    .style-mandala .center {
+      border: 2px dashed var(--yellow-light) !important;
+    }
+
+    /* ESTILO 5: PATRONES */
+    .style-patterns .petal {
+      background: repeating-linear-gradient(45deg, var(--yellow-main), var(--yellow-main) 4px, var(--yellow-dark) 4px, var(--yellow-dark) 8px) !important;
+    }
+    .style-patterns .leaf {
+      background: repeating-linear-gradient(-45deg, #15803d, #15803d 5px, #22c55e 5px, #22c55e 10px) !important;
+    }
+
+    /* Rotación de pétalos */
+    .petal:nth-child(1)  { transform: rotate(0deg); }
+    .petal:nth-child(2)  { transform: rotate(45deg); }
+    .petal:nth-child(3)  { transform: rotate(90deg); }
+    .petal:nth-child(4)  { transform: rotate(135deg); }
+    .petal:nth-child(5)  { transform: rotate(180deg); }
+    .petal:nth-child(6)  { transform: rotate(225deg); }
+    .petal:nth-child(7)  { transform: rotate(270deg); }
+    .petal:nth-child(8)  { transform: rotate(315deg); }
+
+    /* Partículas */
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      background: var(--yellow-light);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--yellow-main);
+      animation: fade-out 1.5s forwards ease-out;
+    }
+
+    @keyframes gentle-sway {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(2deg); }
+    }
+
+    @keyframes fade-out {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.2) translateY(-20px); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Flores amarillas para ti 💛</h1>
+
+  <div class="style-selector">
+    <button class="btn-style active" onclick="setStyle('classic')">Clásico</button>
+    <button class="btn-style" onclick="setStyle('lines')">Líneas</button>
+    <button class="btn-style" onclick="setStyle('dots')">Puntos</button>
+    <button class="btn-style" onclick="setStyle('mandala')">Mandala</button>
+    <button class="btn-style" onclick="setStyle('patterns')">Patrones</button>
+  </div>
+
+  <div id="bouquet" class="bouquet-container style-classic">
+    <!-- Tallos -->
+    <div class="stem stem-1"></div>
+    <div class="stem stem-2"></div>
+    <div class="stem stem-3"></div>
+    <div class="stem stem-4"></div>
+    <div class="stem stem-5"></div>
+
+    <!-- Hojas -->
+    <div class="leaf leaf-left"></div>
+    <div class="leaf leaf-right"></div>
+
+    <!-- Cinta -->
+    <div class="ribbon"></div>
+
+    <!-- Flores -->
+    <div class="flower flower-1">
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="center"></div>
+    </div>
+    <div class="flower flower-2">
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="center"></div>
+    </div>
+    <div class="flower flower-3">
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="center"></div>
+    </div>
+    <div class="flower flower-4">
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="center"></div>
+    </div>
+    <div class="flower flower-5">
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div>
+      <div class="center"></div>
+    </div>
+  </div>
+
+  <script>
+    function setStyle(styleName) {
+      const bouquet = document.getElementById('bouquet');
+      const buttons = document.querySelectorAll('.btn-style');
+      
+      bouquet.className = 'bouquet-container style-' + styleName;
+      
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    document.addEventListener('mousemove', createSparkle);
+    document.addEventListener('touchmove', (e) => {
+      createSparkle(e.touches[0]);
+    });
+
+    function createSparkle(e) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      
+      const size = Math.random() * 8 + 4;
+      sparkle.style.width = `${size}px`;
+      sparkle.style.height = `${size}px`;
+      
+      sparkle.style.left = `${e.clientX}px`;
+      sparkle.style.top = `${e.clientY}px`;
+
+      document.body.appendChild(sparkle);
+
+      setTimeout(() => {
+        sparkle.remove();
+      }, 1500);
+    }
+  </script>
+</body>
+  </html>
+  
